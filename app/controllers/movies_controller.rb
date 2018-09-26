@@ -15,7 +15,8 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     goback = 0
     
-    
+	#capture the ratings and sort info and push it to session hash if any
+	#use the sort and rating info to capture the respective movies and sort them after redirect  
     if params[:sort]
     	@selected_sort = params[:sort]
     	session[:sort] = @selected_sort
@@ -37,7 +38,7 @@ class MoviesController < ApplicationController
     end
 
 	if goback == 1
-		flash.keep
+		flash.keep #stores message from previous action if any
 		redirect_to movies_path(:sort => @selected_sort,:ratings => @selected_ratings)
 	end
 
@@ -51,7 +52,9 @@ class MoviesController < ApplicationController
 	else
 		@movies = Movie.all
 	end				
-      			
+    
+    #sort the movies 
+    #select the movies according to ratings 			
     #@movies = Movie.order(params[:sort])	  	
 	#if params[:ratings]		
 	#	@movies = Movie.where(:rating => params[:ratings].keys).sort
