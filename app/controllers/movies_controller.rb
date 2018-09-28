@@ -37,8 +37,7 @@ class MoviesController < ApplicationController
     	@selected_ratings = nil
     end
 
-	if goback == 1
-		flash.keep #stores message from previous action if any
+	if goback == 1		
 		redirect_to movies_path(:sort => @selected_sort,:ratings => @selected_ratings)
 	end
 
@@ -53,6 +52,11 @@ class MoviesController < ApplicationController
 		@movies = Movie.all
 	end				
     
+    #if selected ratings is nil, set it to a new hash to avoid nil ratings error
+    if @selected_ratings == nil
+		@selected_ratings = Hash.new
+	end
+
     #sort the movies 
     #select the movies according to ratings 			
     #@movies = Movie.order(params[:sort])	  	
